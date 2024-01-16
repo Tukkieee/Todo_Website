@@ -43,8 +43,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -83,9 +83,14 @@ WSGI_APPLICATION = 'TODOPROJECT.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+DATABASE_URL='postgres://todolist_application_user:ZBL7hjUA4HkMl7h8uOSkuYvCA0VDT1rT@dpg-cmj6uev109ks739q4prg-a/todolist_application'
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get("INTERNAL_DATABASE"))
+    'default': dj_database_url.parse(
+        'postgres://todolist_application_user:ZBL7hjUA4HkMl7h8uOSkuYvCA0VDT1rT@dpg-cmj6uev109ks739q4prg-a.oregon-postgres.render.com/todolist_application',
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
