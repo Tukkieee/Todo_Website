@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Todo Website</title>
+</head>
+</script>
+
+<body>
+
+    <div class="wrapper">
+        <div  class="logout">
+            <a href="{% url 'logout' %}"><input type="submit" class="btn2"  value="Logout"></a>
+        </div>
+        <h2>{{user}}'sTodo List</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="inputField">
+                <input type="text" class="input" placeholder="Add your new todo" name="task">
+                <input type="submit" class="btn" value="+">
+            </div>
+        </form>
+        {% if messages %}
+        {% for message in messages %}
+        <h5 style="color: #b22222;">{{message}}</h5>
+        {% endfor %}
+        {% endif %}
+        <ul class="todoList">
+            {% for todo in todos %}
+            <li class="todo {% if todo.status %}completed{% endif %}"> {{todo.todo_name}}
+                <a href="{% url 'delete' todo.id %}"><span class="icon"><i class="fas fa-trash"></i></span></a>
+                <a href="{% url 'complete' todo.id %}"><span class="icon icon1"><i class="fas fa-check"></i></span></a>
+                <a href="{% url 'edit' todo.id %}"><span class="icon icon2"><i class="fas fa-edit"></i></span></a>
+            </li>
+            {% endfor %}
+            <!-- data are comes from local storage -->
+        </ul>
+
+        <div class="footer">
+            <span>You have <span class="pendingTasks">{{todos_len}}</span> pending tasks</span>
+            <a href="{% url 'clear'%}"><button class="btn1">Clear All</button></a>
+        </div>
+    </div>
+
+</body>
+
+   
+
+
+</html>
